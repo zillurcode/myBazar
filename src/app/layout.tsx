@@ -1,12 +1,13 @@
+
 import type { Metadata } from "next";
 import { Hind_Siliguri, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from '@/app/component/header/Header';
-
 import Footer from "./component/Footer/Footer";
 import Marquee from "./component/Marquee";
 import NavLinks from "./component/NavLinks";
 import { Toaster } from "react-hot-toast";
+import { Suspense } from "react"; // 1. Import Suspense
 
 const hindSiliguri = Hind_Siliguri({
   variable: "--font-hind-siliguri",
@@ -36,10 +37,18 @@ export default function RootLayout({
     >
       <body className="m-10 bg-green-50">
         <Header />
-        <NavLinks />
-        <Marquee />
-       
+        
+        {/* 2. Wrap async fetch components in Suspense boundaries */}
+        <Suspense fallback={<div className="py-2 text-center text-gray-400">Loading categories...</div>}>
+          <NavLinks />
+        </Suspense>
+
+        <Suspense fallback={<div className="py-2 text-center text-gray-400">Loading marquee...</div>}>
+          <Marquee />
+        </Suspense>
+
         {children}
+        
         <Toaster />
         <Footer />
       </body>

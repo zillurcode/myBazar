@@ -1,5 +1,8 @@
-import Image from 'next/image'
-import Logo from '@/app/logo-icon.png'
+"use client";
+
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import Logo from '@/app/logo-icon.png';
 import UserInfo from '../userinfo/UserInfo';
 
 interface HeaderProps {
@@ -7,9 +10,16 @@ interface HeaderProps {
 }
 
 const Header = ({ children }: HeaderProps) => {
-  const date = new Date().toLocaleString('bn-BD', {
-    dateStyle: 'full'
-  });
+  const [date, setDate] = useState<string>('');
+
+  useEffect(() => {
+    // Compute date only on the client side to avoid server/client build mismatches
+    setDate(
+      new Date().toLocaleString('bn-BD', {
+        dateStyle: 'full',
+      })
+    );
+  }, []);
 
   return (
     <>
@@ -22,7 +32,9 @@ const Header = ({ children }: HeaderProps) => {
           />
           <div>
             <h2 className="font-bold text-4xl">বাজার দর</h2>
-            <p className="text-gray-500" suppressHydrationWarning>{date}</p>
+            <p className="text-gray-500" suppressHydrationWarning>
+              {date}
+            </p>
           </div>
         </div>
 

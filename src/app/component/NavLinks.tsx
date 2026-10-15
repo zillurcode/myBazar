@@ -12,14 +12,20 @@ const NavLinks = async () => {
   let categories: Category[] = [];
 
   try {
-    const res = await fetch('https://api.api-store.workers.dev/api/bazardor/categories');
+    const res = await fetch('https://api.api-store.workers.dev/api/bazardor/categories', {
+      cache: 'no-store', // Crucial: prevents build prerender hanging if the external API lags
+    });
     
     if (res.ok) {
       const data = await res.json();
       categories = Array.isArray(data) ? data : (data?.data || data?.categories || []);
+    } else {
+      console.error("API returned non-ok status:", res.status);
     }
   } catch (error) {
+    // Safely catch the error so the build doesn't crash
     console.error("Failed to fetch categories:", error);
+    categories = [];
   }
 
   return (
@@ -27,7 +33,6 @@ const NavLinks = async () => {
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-start md:justify-center gap-3 overflow-x-auto scrollbar-hide py-1">
           {categories.map((item, index) => {
-            // Guarantee a valid fallback string so Next.js Link won't receive `undefined`
             const pathIdentifier = item.slug || item.id || index;
             const linkHref = `/category/${pathIdentifier}`;
 

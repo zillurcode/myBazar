@@ -1,7 +1,6 @@
 import MarqueeText from 'react-marquee-text';
 import 'react-marquee-text/dist/styles.css';
 
-// ক্যাটাগরি ডেটার জন্য ইন্টারফেস ডিফাইন করা হলো
 interface CategoryItem {
     id?: string | number;
     slug?: string;
@@ -17,12 +16,17 @@ const Marquee = async () => {
         const res = await fetch('https://api.api-store.workers.dev/api/bazardor/categories', {
             cache: 'no-store'
         });
-        const data = await res.json();
         
-        headlines = Array.isArray(data) ? data : (data?.data || data?.categories || []);
+        if (res.ok) {
+            const data = await res.json();
+            headlines = Array.isArray(data) ? data : (data?.data || data?.categories || []);
+        } else {
+            console.error("Marquee API non-ok status:", res.status);
+        }
         
     } catch (error) {
         console.error("Marquee Fetch Error:", error);
+        headlines = []; 
     }
 
     return (
