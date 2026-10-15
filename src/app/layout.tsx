@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Hind_Siliguri, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from '@/app/component/header/Header'
+import Header from '@/app/component/header/Header';
 
 import Footer from "./component/Footer/Footer";
 import Marquee from "./component/Marquee";
 import NavLinks from "./component/NavLinks";
+import { Toaster } from "react-hot-toast";
 
 const hindSiliguri = Hind_Siliguri({
   variable: "--font-hind-siliguri",
@@ -34,15 +35,14 @@ export default function RootLayout({
       className={`${hindSiliguri.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="m-10 bg-green-50">
-        <Header > </Header>
+        <Header />
         <NavLinks />
-        <Marquee ></Marquee>
+        <Marquee />
        
         {children}
-        
+        <Toaster />
         <Footer />
-        </body>
-      
+      </body>
     </html>
   );
 }
