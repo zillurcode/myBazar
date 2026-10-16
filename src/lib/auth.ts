@@ -4,12 +4,17 @@ import { mongodbAdapter } from "better-auth/adapters/mongodb";
 
 const uri = process.env.MONGODB_URL || process.env.MONGODB_URI || "";
 
-// Safe client initialization that won't crash the build if env vars aren't read yet
 const client = uri ? new MongoClient(uri) : ({} as MongoClient);
 const db = uri ? client.db("my-bazar") : ({} as any);
 
+// Automatically detect Vercel production URL if BETTER_AUTH_URL is missing
+const getBaseURL = () => {
+  if (process.env.BETTER_AUTH_URL) return process.env.BETTER_AUTH_URL;
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return "https://my-bazar-wrun.vercel.app";
+};
+
 export const auth = betterAuth({
-  // Pass { client } here because MongoDB Atlas requires a replica set adapter configuration
   database: uri ? mongodbAdapter(db, { client }) : ({} as any),
   account: {
     accountLinking: {
@@ -31,5 +36,5 @@ export const auth = betterAuth({
     },
   },
   secret: process.env.BETTER_AUTH_SECRET || "dummy-secret-for-build",
-  baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
+  baseURL: getBaseURL(),
 });
