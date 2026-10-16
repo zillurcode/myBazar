@@ -4,18 +4,18 @@ import { mongodbAdapter } from "better-auth/adapters/mongodb";
 
 const uri = process.env.MONGODB_URL || process.env.MONGODB_URI || "";
 
+if (!uri) {
+  throw new Error("Please add your MongoDB URI to environment variables");
+}
+
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 
-if (!uri) {
-  throw-new Error("Please add your Mongo URI to environment variables");
-}
+const globalWithMongo = global as typeof globalThis & {
+  _mongoClientPromise?: Promise<MongoClient>;
+};
 
 if (process.env.NODE_ENV === "development") {
-  const globalWithMongo = global as typeof globalThis & {
-    _mongoClientPromise?: Promise<MongoClient>;
-  };
-
   if (!globalWithMongo._mongoClientPromise) {
     client = new MongoClient(uri);
     globalWithMongo._mongoClientPromise = client.connect();
@@ -26,11 +26,12 @@ if (process.env.NODE_ENV === "development") {
   clientPromise = client.connect();
 }
 
-
-const db = (await clientPromise).db("my-bazar");
-
+// Lazy initialization helper for Better-Auth adapter on serverless
 export const auth = betterAuth({
-  database: mongodbAdapter(db),
+  database: mongodbAdapter({
+    // Pass a getter or handle connection safely for serverless
+    db: clientPromise.then((c) => c.db("my-bazar")),
+  } as any),
   account: {
     accountLinking: {
       enabled: true,
