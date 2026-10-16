@@ -60,7 +60,7 @@ const CategoryCard = ({ product }: ProductProps) => {
                     )}
                 </div>
 
-                {/* Price Section */}
+              
                 <div className="mt-4 grid grid-cols-2 gap-3 bg-gray-50 p-3 rounded-xl border border-gray-100">
                     <div>
                         <p className="text-xs text-gray-400">আজকের দাম</p>
@@ -72,7 +72,7 @@ const CategoryCard = ({ product }: ProductProps) => {
                     </div>
                 </div>
 
-                {/* Markets Preview */}
+               
                 {product.markets && product.markets.length > 0 && (
                     <div className="mt-4">
                         <p className="text-xs font-semibold text-gray-500 mb-2">বাজারের তালিকা ({product.markets.length}টি বাজার):</p>

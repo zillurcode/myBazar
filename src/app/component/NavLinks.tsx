@@ -13,7 +13,7 @@ const NavLinks = async () => {
 
   try {
     const res = await fetch('https://api.api-store.workers.dev/api/bazardor/categories', {
-      cache: 'no-store', // Crucial: prevents build prerender hanging if the external API lags
+      cache: 'no-store', // 
     });
     
     if (res.ok) {

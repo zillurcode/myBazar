@@ -1,49 +1,32 @@
-"use client";
-
-import React, { useState, useEffect } from 'react';
 import Image from "next/image";
-import BannerImg from '@/app/bazar-hero.png';
-import Link from "next/link"; 
+import Link from "next/link";
+import BannerImg from "@/app/bazar-hero.png";
 
 const Banner = () => {
-    const [date, setDate] = useState<string>('');
+  return (
+    <section className="my-10 flex flex-col items-center justify-between gap-8 bg-white p-10 lg:flex-row">
+      <div className="flex-1">
+        <h2 className="mt-2 text-4xl font-bold">আজকের বাজারের দাম এক নজরে</h2>
+        <p className="py-4 text-xl font-semibold text-gray-600">
+          চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার দাম — বাজারভিত্তিক বিস্তারিত,
+          গড়, সর্বনিম্ন, সর্বাধিক এবং দামের পরিবর্তন এক জায়গায়।
+        </p>
 
-    useEffect(() => {
-        setDate(
-            new Date().toLocaleDateString('bn-BD', {
-                dateStyle: 'full'
-            })
-        );
-    }, []);
+        <Link href="/products" className="btn btn-success px-6 text-white">
+          সব পণ্য দেখুন
+        </Link>
+      </div>
 
-    return (
-        <div className="flex flex-col lg:flex-row items-center justify-between my-10 p-10 bg-white">
-            <div className="container mx-auto">
-                <p className="bg-emerald-100 text-emerald-700 px-3 py-1 text-sm font-medium w-fit rounded-full mb-3" suppressHydrationWarning>
-                    {date}
-                </p>
-                <h2 className="font-bold text-4xl mt-2">আজকের বাজারের দাম এক নজরে</h2>
-                <p className="font-semibold text-xl py-4 text-gray-600">
-                    চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার দাম — বাজারভিত্তিক বিস্তারিত, গড়, সর্বনিম্ন <br />
-                    সর্বাধিক এবং দামের পরিবর্তন এক জায়গায়।
-                </p>
-                
-                <Link href={''} className="btn btn-success text-white px-6">
-                    সব পণ্য দেখুন
-                </Link>
-            </div>
-            
-            <div className="mt-6 lg:mt-0">
-                <Image 
-                    src={BannerImg} 
-                    alt="banner" 
-                    width={500} 
-                    height={400} 
-                    priority 
-                />
-            </div>
-        </div>
-    );
+      <div className="w-full max-w-md lg:max-w-lg">
+        <Image
+          src={BannerImg}
+          alt="আজকের বাজারদর ব্যানার"
+          priority
+          className="h-auto w-full"
+        />
+      </div>
+    </section>
+  );
 };
 
 export default Banner;

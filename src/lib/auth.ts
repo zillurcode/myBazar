@@ -9,7 +9,8 @@ const client = uri ? new MongoClient(uri) : ({} as MongoClient);
 const db = uri ? client.db("my-bazar") : ({} as any);
 
 export const auth = betterAuth({
-  database: uri ? mongodbAdapter(db) : ({} as any),
+  // Pass { client } here because MongoDB Atlas requires a replica set adapter configuration
+  database: uri ? mongodbAdapter(db, { client }) : ({} as any),
   account: {
     accountLinking: {
       enabled: true,

@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 
 const ProfilePage = () => {
     const router = useRouter();
-    const { data: session } = authClient.useSession();
+    const { data: session, isPending } = authClient.useSession(); // Added isPending check
     const user = session?.user;
     const [loading, setLoading] = useState(false);
 
@@ -26,16 +26,25 @@ const ProfilePage = () => {
         });
 
         if (data) {
-            toast.success('প্রোফাইল সফলভাবে আপডেট হয়েছে!');
+            toast.success('প্রোফাইল সফলভাবে আপডেট হয়েছে!');
             router.refresh();
         }
 
         if (error) {
-            toast.error(error.message || 'আপডেট করতে সমস্যা হয়েছে');
+            toast.error(error.message || 'আপডেট করতে সমস্যা হয়েছে');
         }
 
         setLoading(false);
     };
+
+    // Show a clean loading state while the session is being fetched
+    if (isPending) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-base-200/50">
+                <span className="loading loading-spinner loading-lg text-success"></span>
+            </div>
+        );
+    }
 
     return (
         <section className="min-h-screen bg-base-200/50 py-10 px-4 flex flex-col items-center">
@@ -55,7 +64,7 @@ const ProfilePage = () => {
                             </div>
                         </div>
                         <div>
-                            <h2 className="text-xl font-bold text-base-content">{user?.name}</h2>
+                            <h2 className="text-xl font-bold text-base-content">{user?.name || 'ব্যবহারকারী'}</h2>
                             <p className="text-sm text-base-content/60">{user?.email}</p>
                         </div>
                     </div>
@@ -82,7 +91,7 @@ const ProfilePage = () => {
                             <input 
                                 type="text" 
                                 name="name"
-                              
+                                defaultValue={user?.name || ''} 
                                 key={user?.name} 
                                 className="input input-bordered w-full rounded-xl bg-base-100 focus:input-success transition-all" 
                                 required

@@ -9,7 +9,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@better-auth/mongo-adapter": "^1.7.7",
     "better-auth": "^1.7.7",
     "mongodb": "^7.7.0",
     "next": "16.4.0",
@@ -20,15 +19,15 @@
     "react-toastify": "^11.1.0"
   },
   "devDependencies": {
-    "@tailwindcss/turbopack": "^4",
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "babel-plugin-react-compiler": "1.0.0",
-    "daisyui": "^5.7.47",
+    "daisyui": "^5.7.50",
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
-    "tailwindcss": "^4",
+    "postcss": "^8.5.30",
+    "tailwindcss": "^4.3.3",
     "typescript": "^5"
   }
 }
