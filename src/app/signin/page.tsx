@@ -21,12 +21,11 @@ const SignInPage = () => {
       callbackURL: '/',
     });
 
-    // SUCCESS
     if (data) {
       toast.success('সাইন ইন সফল হয়েছে');
     }
 
-    // ERROR
+   
     if (error) {
       toast.error(error.message || 'সাইন ইন করতে সমস্যা হয়েছে');
     }
