@@ -10,5 +10,5 @@ const db = uri ? client.db("my-bazar") : ({} as any);
 export const auth = betterAuth({
   database: uri ? mongodbAdapter(db, { client }) : ({} as any),
   // 
-  baseURL: "https://my-bazar-wrun.vercel.app",
+  baseURL: "https://my-bazar-ruby.vercel.app/",
 });
