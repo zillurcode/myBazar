@@ -33,7 +33,7 @@ export default function CategoryDetailsPage() {
     async function fetchProducts() {
       try {
         const res = await fetch('https://api.api-store.workers.dev/api/bazardor/products', {
-          cache: 'no-store',
+         
         });
 
         if (!res.ok) return;
@@ -104,7 +104,7 @@ export default function CategoryDetailsPage() {
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-8 bg-[#F8F9FA] min-h-screen">
-      {/* Header */}
+      
       <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between mb-6">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center text-3xl border border-gray-100 shadow-sm">
@@ -126,7 +126,7 @@ export default function CategoryDetailsPage() {
         </Link>
       </div>
 
-      {/* Filter */}
+     
       <div className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm mb-6 flex items-center justify-between">
         <span className="text-sm text-gray-600 font-medium">ফিল্টার অপশন</span>
 
@@ -145,7 +145,7 @@ export default function CategoryDetailsPage() {
         </div>
       </div>
 
-      {/* Product Grid */}
+     
       {filteredProducts.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProducts.map((item) => (

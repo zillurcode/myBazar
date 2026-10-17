@@ -23,7 +23,7 @@ const NavLinks = async () => {
       console.error("API returned non-ok status:", res.status);
     }
   } catch (error) {
-    // Safely catch the error so the build doesn't crash
+   
     console.error("Failed to fetch categories:", error);
     categories = [];
   }
